@@ -10,6 +10,8 @@ Can a creator predict a video's engagement before publishing it? I evaluated mod
 | [Regression after removing leakage](8_modelling_results_TRUE_PREDICTION.csv) | All six test R² scores were negative. Random forest scored −4.72. | On this split, even the best recorded model performed worse than the held-out mean benchmark. |
 | [High versus low classification](9_train_model_results_explained.md) | Seven videos flagged, one true positive, six false positives | The test set contained only one high-performing video. More independently labelled positives would be needed to assess recall reliably. |
 
+The original run compared classifiers on the ten-video holdout to choose the winner. Its score is therefore exploratory. The revised training script selects the model using cross-validation on the training data before evaluating it on the holdout. A fresh external sample would be needed for independent confirmation.
+
 ## Inspect or rerun the final experiments
 
 The result tables above can be inspected directly. To rerun training from the committed feature CSV, use a fresh Python environment and run these commands from the repository root. The training scripts write results into the working directory.
