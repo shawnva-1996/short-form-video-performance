@@ -34,22 +34,6 @@ except FileNotFoundError:
     exit()
 
 # --- CRITICAL: Define all features to drop to prevent any data leakage ---
-# features_to_drop = [
-#     'performance_category', # The target variable itself
-#     'viral',                # The original source of the target
-#     'log_likes',            # A direct LEAK for the performance category
-#     'Like Count',           # Direct leak
-#     'Play Count',           # Direct leak
-#     'log1p_play_count',     # Direct leak
-
-#     'Video ID', 'Post Caption', 'Post Timestamp', 'Canonical URL',
-#     'Creator Username', 'Creator Nickname', 'Creator User ID', 'Creator SEC UID',
-#     'Music ID', 'Music Title', 'Music Author', 'Audio Play URL', 'Keywords',
-#     'transcript',
-#     '_parsed_time', 'cv_fold_grouped', 'temporal_split', 'is_holdout',
-#     'duration_s',
-# ]
-
 features_to_drop = [
     # --- Target and Direct Leaks ---
     'log_likes',        # The regression target
@@ -157,18 +141,16 @@ for name, model in models.items():
     )
     random_search.fit(X_train, y_train)
     
-    # Use the main score for comparison
-    test_score = random_search.score(X_test, y_test)
-    
+    cv_score = random_search.best_score_
     print(f"Best parameters for {name}: {random_search.best_params_}")
-    print(f"Test F1 Score for {name}: {test_score:.4f}")
-    
-    if test_score > best_score:
-        best_score = test_score
+    print(f"Training cross-validation weighted F1 for {name}: {cv_score:.4f}")
+
+    if cv_score > best_score:
+        best_score = cv_score
         best_model = random_search.best_estimator_
         best_model_name = name
 
-print(f"\n--- Best Performing Model: {best_model_name} with F1 Score: {best_score:.4f} ---")
+print(f"\n--- Selected model: {best_model_name} with training CV weighted F1: {best_score:.4f} ---")
 
 # --- Analyze the Best Model ---
 y_pred = best_model.predict(X_test)
@@ -176,7 +158,7 @@ class_labels = best_model.classes_
 
 # 1. Classification Report
 print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
+print(classification_report(y_test, y_pred, zero_division=0))
 
 # 2. Confusion Matrix
 print("Confusion Matrix:")
