@@ -18,3 +18,5 @@ Confusion matrix:
 [View the confusion matrix](final_confusion_matrix.png)
 
 The test split contained one high-performing video and nine low-performing videos. The classifier flagged seven videos as high-performing. One was correct and six were false positives. Predicting the majority class for every video would have been correct nine times out of ten, while missing the sole high-performing video. With one positive example, recall is too uncertain to support a deployment decision.
+
+The original run compared classifiers on the ten-video holdout to choose the winner. Its score is therefore exploratory. The revised training script selects the model using cross-validation on the training data before evaluating it on the holdout. A fresh external sample would be needed for independent confirmation.
