@@ -24,28 +24,13 @@ INTERMEDIATE_CSV = '7a_transcripts_and_base_features.csv'
 FINAL_OUTPUT_CSV = '7b_data_with_full_transcript_features.csv'
 WHISPER_MODEL = 'base'
 
-# # --- Llama 3.1 Configuration ---
-# OLLAMA_ENDPOINT = 'http://localhost:11434/api/generate'
-# LLAMA_MODEL = 'llama3.1:8b'
-# MAX_LLM_WORKERS = 4 # Adjust based on your Mac's performance (M4 Air can likely handle 4-6)
+api_key = os.environ.get("GEMINI_API_KEY")
+if not api_key:
+    raise SystemExit("Set GEMINI_API_KEY before running semantic feature extraction.")
+genai.configure(api_key=api_key)
 
-# --- Gemini Configuration ---
-# Set your API key in your environment variables for security
-# (e.g., export GEMINI_API_KEY='your_key_here')
-try:
-    genai.configure(api_key="AIzaSyCRYwTZ-xooWz9TA6g25746IIFzt1isjkE")
-except KeyError:
-    print("Error: GEMINI_API_KEY environment variable not set.")
-    exit()
-
-GEMINI_MODEL = 'gemini-2.5-pro' #'gemini-1.5-pro-latest' # Or 'gemini-pro'
-
-# Gemini 2.5 Pro	gemini-2.5-pro	Top-tier performance. Best for complex reasoning, coding, and challenging creative tasks.
-# Gemini 2.5 Flash	gemini-2.5-flash	Speed & Performance. The best balance of speed and capability, great for chat, summarization, and high-frequency tasks.
-# Gemini 2.5 Flash-Lite	gemini-2.5-flash-lite	Fastest / Most Cost-Efficient. Ideal for highly scaled, low-latency tasks where cost is a major factor.
-# Gemini 2.0 Flash	gemini-2.0-flash	A previous-generation fast model, still available and reliable.
-
-MAX_LLM_WORKERS = 4 # You can increase this with an API
+GEMINI_MODEL = 'gemini-2.5-pro'
+MAX_LLM_WORKERS = 4
 
 # --- Feature Engineering Keyword Lists ---
 CTA_KEYWORDS = ["link in bio", "follow for more", "subscribe", "download", "comment below"]
