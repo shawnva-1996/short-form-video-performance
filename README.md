@@ -1,12 +1,16 @@
-# Robustness Test & Validation Suite
+# Predicting Short-Form Video Performance
 
-## 📋 Project Overview
-This software suite serves as the validation component for the **Search Video Optimisation (SVO)** project (https://github.com/shawnva-1996/svo-va). While the main SVO app is designed for client-specific data, this suite stress-tests the machine learning pipeline against an **external dataset** of 60 videos (30 International, 30 Singaporean).
+**Machine learning capstone · Singapore Institute of Technology · Python**
 
-**Key Capabilities:**
-* **Data Leakage Detection:** Scripts specifically designed to strip post-event metrics (e.g., Play Counts) to ensure model integrity.
-* **Multimodal AI Analysis:** Uses **OpenAI Whisper** (local) for audio transcription and **Google Gemini 2.5 Pro** (API) for semantic topic/tone analysis.
-* **Generalization Testing:** Evaluates model performance on unseen data, demonstrating the pivot from Regression (predicting likes) to Classification (predicting performance tiers).
+Can you estimate a video's likes before anyone watches it? I tested that question on 60 external videos, split evenly between Singapore and international samples. Engagement counts and labels derived from final performance made the model look stronger than it was. Once those inputs were removed, every regression model scored below zero on test R². On this sample, predicting exact likes was less reliable than using the test-set mean as a benchmark.
+
+| What to inspect | Why it matters |
+| --- | --- |
+| [Feature leakage removal](5_remove_data_leakage.py) | Shows which inputs were excluded from the prediction pipeline. |
+| [Pre-publication regression results](8_modelling_results_TRUE_PREDICTION.csv) | Compare the models directly on held-out data. |
+| [High vs. low performance experiment](9_high_vs_low_perf.py) | Explore the follow-up question of whether a coarser prediction target is more tractable. |
+
+The pipeline uses Whisper for transcription and Gemini for topic and tone features. The small external sample limits how far these findings generalise.
 
 ## ⚙️ System Prerequisites (Critical)
 
