@@ -12,6 +12,8 @@ Can a creator predict a video's engagement before publishing it? I evaluated mod
 
 The original run compared classifiers on the ten-video holdout to choose the winner. Its score is therefore exploratory. The revised training script selects the model using cross-validation on the training data before evaluating it on the holdout. A fresh external sample would be needed for independent confirmation.
 
+On 21 November 2026, rerunning the documented classification steps from the committed feature CSV produced 48 training rows and 12 holdout rows. Training-fold selection chose random forest (mean weighted F1 0.8083). On the holdout it flagged 11 videos, including the sole high performer and ten false positives. It classified 2 of 12 correctly. The earlier report used ten holdout rows, so the scores from the two runs cannot be compared directly. Neither run supports deployment.
+
 ## Inspect or rerun the final experiments
 
 The result tables above can be inspected directly. To rerun training from the committed feature CSV, use a fresh Python environment and run these commands from the repository root. The training scripts write results into the working directory.
