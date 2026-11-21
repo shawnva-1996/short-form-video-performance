@@ -1,4 +1,10 @@
-# Held-out classification results
+# Classification results
+
+## Rerun from the committed feature CSV
+
+On 21 November 2026, rerunning the documented classification steps from the committed feature CSV produced 48 training rows and 12 holdout rows. Training-fold selection chose random forest (mean weighted F1 0.8083). On the holdout it flagged 11 videos, including the sole high performer and ten false positives. It classified 2 of 12 correctly. The earlier report used ten holdout rows, so the scores from the two runs cannot be compared directly. Neither run supports deployment.
+
+## Historical classification report
 
 Selected model: logistic regression. Reported weighted F1: 0.475.
 
